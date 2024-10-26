@@ -28,3 +28,6 @@ export const loginUser = async (request, h) => {
 
   return h.response({ token });
 };
+export const sum = (one,two) =>{
+  return one+two
+}

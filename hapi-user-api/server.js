@@ -2,6 +2,7 @@ import Hapi from '@hapi/hapi';
 import userRoutes from './routes/userRoutes.js';
 import sequelize from './config/database.js';
 import dotenv from 'dotenv';
+import rateLimiterPlugin from './config/rateLimit.js';
 
 dotenv.config();
 
@@ -11,9 +12,16 @@ const init = async () => {
     host: 'localhost',
   });
 
+  await server.register({
+    plugin: rateLimiterPlugin,
+    options: {
+      userLimit: 10, // Max requests per IP
+      timeWindow: 10000, // Time window in milliseconds (e.g., 1 second)
+    },
+  });
   // Register user routes
   server.route(userRoutes);
-
+  
   await sequelize.sync(); // Ensure that the database is in sync with the models
 
   await server.start();
