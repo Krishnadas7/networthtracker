@@ -38,7 +38,7 @@ jobs:
 
     - name: Push Docker Image to ECR
       run: |
-        docker push $ECR_REGISTRY/my-app:latest
+        docker push $ECR_REGISTRY/backend-repo:latest
 
     - name: Update ECS Service
       run: |
