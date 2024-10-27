@@ -1,5 +1,5 @@
-// Import the User model with ES6 syntax
-import User from '../models/User'; // adjust the path as necessary
+
+import User from '../models/User'; 
 
 // Mock the User model
 jest.mock('../models/User');
@@ -44,5 +44,5 @@ jest.mock('../models/User', () => ({
     });
   });
 
-  // Repeat similar mocking patterns for other methods like deleteOne
+ 
 });

@@ -1,4 +1,3 @@
-// rateLimiter.js
 
 const requestCounts = {};
 
@@ -26,7 +25,6 @@ const rateLimiterPlugin = {
               .takeover();
           }
         } else {
-          // Reset count if the time window has passed
           requestCounts[clientIp].count = 1;
           requestCounts[clientIp].startTime = currentTime;
         }

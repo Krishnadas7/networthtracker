@@ -16,7 +16,7 @@ describe('User Controller', () => {
 
   describe('createUser', () => {
     it('should create a new user and return user details with status code 201', async () => {
-      // Arrange: Mock request and response objects
+      //  Mock request and response objects
       const request = {
         payload: {
           name: 'test1',
@@ -42,7 +42,7 @@ describe('User Controller', () => {
       // Act: Call the createUser function
       const result = await createUser(request, h);
 
-      // Assert: Check if createUser behaves as expected
+      // Check if createUser behaves as expected
       expect(bcrypt.hash).toHaveBeenCalledWith('password123', 10);
       expect(User.create).toHaveBeenCalledWith({
         name: 'test1',
@@ -78,7 +78,6 @@ describe('User Controller', () => {
       // Act
       const result = await createUser(request, h);
 
-      // Assert
       expect(h.response).toHaveBeenCalledWith({ error: 'User creation failed' });
       expect(h.response().code).toHaveBeenCalledWith(500);
     });

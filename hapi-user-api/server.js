@@ -22,7 +22,7 @@ const init = async () => {
   // Register user routes
   server.route(userRoutes);
   
-  await sequelize.sync(); // Ensure that the database is in sync with the models
+  await sequelize.sync(); 
 
   await server.start();
   console.log(`Server running on ${server.info.uri}`);

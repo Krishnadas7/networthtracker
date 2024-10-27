@@ -15,7 +15,6 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  // Add any other fields necessary for PII
 });
 
 export default User;
