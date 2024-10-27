@@ -34,11 +34,12 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t $ECR_REGISTRY/my-app:latest -f hapi-user-api/dockerfile hapi-user-api
+        docker build -t backend:latest SECURE-PROJECT/hapi-user-api  # Build the image with 'backend' name
+        docker tag backend:latest $ECR_REGISTRY/backend-repo:latest  # Tag it for ECR
 
     - name: Push Docker Image to ECR
       run: |
-        docker push $ECR_REGISTRY/backend-repo:latest
+        docker push $ECR_REGISTRY/backend-repo:latest  # Push to ECR
 
     - name: Update ECS Service
       run: |
