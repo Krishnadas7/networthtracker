@@ -34,7 +34,7 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t $ECR_REGISTRY/my-app:latest -f hapi-user-api/Dockerfile hapi-user-api
+        docker build -t $ECR_REGISTRY/my-app:latest -f hapi-user-api/dockerfile hapi-user-api
 
     - name: Push Docker Image to ECR
       run: |
