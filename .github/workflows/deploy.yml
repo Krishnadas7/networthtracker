@@ -34,7 +34,7 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t $ECR_REGISTRY/backend-repo:latest hapi-user-api/Dockerfile hapi-user-api  # Use the repository name you provided
+        docker build -t $ECR_REGISTRY/backend-repo:latest hapi-user-api/dockerfile hapi-user-api  # Use the repository name you provided
         docker tag $ECR_REGISTRY/backend-repo:latest $ECR_REGISTRY/backend-repo:latest
 
     - name: Push Docker Image to ECR
