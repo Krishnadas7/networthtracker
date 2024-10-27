@@ -1,0 +1,46 @@
+name: CI/CD Pipeline for AWS ECS
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}      
+  ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}   
+  ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}    
+  ECS_SERVICE: ${{ secrets.ECS_SERVICE }}    
+  ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }}  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Log in to Amazon ECR
+      run: |
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set default.region $AWS_REGION
+        aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_REGISTRY
+
+    - name: Build Docker Image
+      run: |
+        docker build -t $ECR_REGISTRY/backend-repo:latest .  # Use the repository name you provided
+        docker tag $ECR_REGISTRY/backend-repo:latest $ECR_REGISTRY/backend-repo:latest
+
+    - name: Push Docker Image to ECR
+      run: |
+        docker push $ECR_REGISTRY/backend-repo:latest
+
+    - name: Update ECS Service
+      run: |
+        aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --force-new-deployment --desired-count 1
